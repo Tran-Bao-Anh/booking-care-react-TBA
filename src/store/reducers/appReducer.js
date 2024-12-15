@@ -9,7 +9,7 @@ const initContentOfConfirmModal = {
 
 const initialState = {
     started: true,
-    language: 'vi',
+    language: 'en',
     systemMenuPath: '/system/user-manage',
     contentOfConfirmModal: {
         ...initContentOfConfirmModal
@@ -18,7 +18,7 @@ const initialState = {
 
 const appReducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.APP_START_UP_COMPLETE: 
+        case actionTypes.APP_START_UP_COMPLETE:
             return {
                 ...state,
                 started: true
