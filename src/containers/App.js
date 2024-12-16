@@ -21,6 +21,7 @@ import System from "../routes/System";
 
 import { CustomToastCloseButton } from "../components/CustomToast";
 import HomePage from "./HomePage/HomePage";
+import CustomScrollbars from "../components/CustomScrollbars";
 
 class App extends Component {
   handlePersistorState = () => {
@@ -50,23 +51,27 @@ class App extends Component {
             {/* check login, nếu login rồi thì render ra <header/> */}
             {this.props.isLoggedIn && <Header />}
 
-            <span className="content-container">
-              <Switch>
-                {/* có 3 rout home, login, system được import phía trên cùng */}
-                {/* khai báo hết path trong file constant(giữ control click vào path trong {path.HOME}) */}
-                <Route path={path.HOME} exact component={Home} />
-                {/* dùng Hàm bọc HOC userIsNotAuthenticated, userIsAuthenticated để check xem đã đăng nhập chưa, nếu chưa thì sẽ vào rout home vì home chưa bọc gì */}
-                <Route
-                  path={path.LOGIN}
-                  component={userIsNotAuthenticated(Login)}
-                />
-                <Route
-                  path={path.SYSTEM}
-                  component={userIsAuthenticated(System)}
-                />
-                <Route path={path.HOMEPAGE} component={HomePage} />
-              </Switch>
-            </span>
+            <div className="content-container">
+              {/* CustomScrollbars sẽ tự phát hiện những component nào bị over flow thì sẽ tự động tạo scroll  */}
+              {/* đặt chiều cao là 100vh để nếu chiều cao vượt quá khung nhìn thì xuất hiện scroll */}
+              <CustomScrollbars style={{height: '100vh', width:'100%'}}>
+                <Switch>
+                  {/* có 3 rout home, login, system được import phía trên cùng */}
+                  {/* khai báo hết path trong file constant(giữ control click vào path trong {path.HOME}) */}
+                  <Route path={path.HOME} exact component={Home} />
+                  {/* dùng Hàm bọc HOC userIsNotAuthenticated, userIsAuthenticated để check xem đã đăng nhập chưa, nếu chưa thì sẽ vào rout home vì home chưa bọc gì */}
+                  <Route
+                    path={path.LOGIN}
+                    component={userIsNotAuthenticated(Login)}
+                  />
+                  <Route
+                    path={path.SYSTEM}
+                    component={userIsAuthenticated(System)}
+                  />
+                  <Route path={path.HOMEPAGE} component={HomePage} />
+                </Switch>
+              </CustomScrollbars>
+            </div>
 
             <ToastContainer
               className="toast-container"

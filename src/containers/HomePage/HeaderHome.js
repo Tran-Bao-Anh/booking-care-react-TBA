@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import "./HeaderHome.scss";
 import logo from "../../assets/images/logoBookingCare.svg";
 import { FormattedMessage } from "react-intl"; //giúp chuyển đỗi ngôn ngữ
+//LANGUAGES được khai báo trong file constant(là nơi khai báo các biến const)
 import { languages, LANGUAGES } from "../../utils";
 
 import { changeLanguageApp } from "../../store/actions";
@@ -167,12 +168,14 @@ class HeaderHome extends Component {
   }
 }
 
+//hàm mapStateToProps dùng truyền state của redux sang props của component
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
     language: state.app.language
   };
 };
+
 
 const mapDispatchToProps = (dispatch) => {
   return {

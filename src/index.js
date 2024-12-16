@@ -9,7 +9,9 @@ import IntlProviderWrapper from "./hoc/IntlProviderWrapper";
 
 
 import { Provider } from 'react-redux';
-import reduxStore, { persistor } from './redux';
+//reduxStore là nơi lưu trữ các thông tin của redux
+//persistor giúp lưu trữ một biến của redux giống như lưu 1 biến ở local storage
+import reduxStore, { persistor } from './redux';    
 
 const renderApp = () => {
     ReactDOM.render(
