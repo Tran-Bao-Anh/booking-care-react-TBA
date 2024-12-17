@@ -2,6 +2,10 @@
   height: 60px;
   width: 100%;
   padding: 0 40px;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 10000;
 
   .home-header-content {
     width: 100%;
@@ -66,12 +70,12 @@
         &.active {
           opacity: 1;
 
-          span{
+          span {
             color: orange;
           }
         }
 
-        &:hover{
+        &:hover {
           opacity: 0.8;
         }
       }
@@ -83,13 +87,13 @@
 
         &.active {
           opacity: 1;
-          
-          span{
+
+          span {
             color: blue;
           }
         }
-        
-        &:hover{
+
+        &:hover {
           opacity: 0.8;
         }
       }
