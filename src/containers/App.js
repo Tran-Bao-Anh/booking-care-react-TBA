@@ -13,10 +13,8 @@ import {
 import { path } from "../utils";
 
 import Home from "../routes/Home";
-// import Login from '../routes/Login';
 import Login from "./Auth/Login";
 
-import Header from "./Header/Header";
 import System from "../routes/System";
 
 import { CustomToastCloseButton } from "../components/CustomToast";
@@ -48,8 +46,7 @@ class App extends Component {
         {/* history dùng để lưu lại lịch sử, giữ các thông tin trên trang khi refresh */}
         <Router history={history}>
           <div className="main-container">
-            {/* check login, nếu login rồi thì render ra <header/> */}
-            {this.props.isLoggedIn && <Header />}
+            
 
             <div className="content-container">
               {/* CustomScrollbars sẽ tự phát hiện những component nào bị over flow thì sẽ tự động tạo scroll  */}
