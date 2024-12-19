@@ -172,14 +172,14 @@ class HeaderHome extends Component {
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
-    language: state.app.language
+    userInfo: state.user.userInfo,
+    language: state.app.language,
   };
 };
 
-
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeLanguageAppRedux: (language)=>dispatch(changeLanguageApp(language))
+    changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language)),
   };
 };
 
