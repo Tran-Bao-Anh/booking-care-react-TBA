@@ -1,3 +1,5 @@
+//Bên trong appReducer trả về 1 state. state này được gán vào biến app trong hàm combineReducers trong file rootReducer.js
+
 import actionTypes from "../actions/actionTypes";
 
 const initContentOfConfirmModal = {

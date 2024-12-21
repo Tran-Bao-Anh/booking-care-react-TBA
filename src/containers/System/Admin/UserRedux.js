@@ -3,6 +3,10 @@ import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { getAllCodeService } from "../../../services/userService";
 import { LANGUAGES } from "../../../utils";
+//Để fire 1 action đầu tiên phải import action trong folder actions
+//Nhấn giữ control và click vào actions sẽ vào file index.js trong folder actions bởi vì file index luôn là file đầu tiên được mở khi truy cập vào folder
+//Sau đó kéo xuống hàm mapDispatchToProps
+import * as actions from "../../../store/actions";
 
 class UserRedux extends Component {
   constructor(props) {
@@ -15,9 +19,12 @@ class UserRedux extends Component {
   }
 
   componentDidMount() {
-    this.allCodeGender();
-    this.allCodePosition();
-    this.allCodeRole();
+    // this.allCodeGender();
+    // this.allCodePosition();
+    // this.allCodeRole();
+    ///////
+    // this.props.dispatch(actions.fetchGenderStart())  //Đây là cú pháp chuẩn của redux, thay vì gọi hàm như vậy thì ta dùng hàm mapDispatchToProps xong gọi hàm như bên dưới
+    this.props.getGenderStart(); //Sau khi gọi hàm như vậy thì nó sẽ chạy sang file adminActions.js để thực hiện hàm fetchGenderStart
   }
   allCodeGender = async () => {
     try {
@@ -63,7 +70,8 @@ class UserRedux extends Component {
 
   render() {
     console.log("check state from userRedux.js: ", this.state);
-    let genders = this.state.genderArr;
+    console.log("check props UserRedux: ", this.props.genderRedux);
+    let genders = this.props.genderRedux;
     let positions = this.state.positionArr;
     let roles = this.state.roleArr;
     let language = this.props.language;
@@ -186,13 +194,22 @@ class UserRedux extends Component {
 }
 
 const mapStateToProps = (state) => {
+  //biến state giống như một call back của hàm mapStateToProps truyền qua, state này của redux sau khi lấy đc state của redux thì ta truy cập vào key của nó, key ở trong hàm combineReducers trong file rootReducer.js
   return {
+    //khi dùng state.app tức là mình đang dùng cái file appReducer.js check trong hàm combineReducers bên file rootReducer.js, mở appReducer để xem tiếp
     language: state.app.language,
+    genderRedux: state.admin.genders,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    // processLogout: () => dispatch(actions.processLogout()),
+    // changeLanguageAppRedux: (language) => dispatch(actions.changeLanguageApp(language)),
+    //Đặc một function tên getGenderStart, function này sẽ fire event là actions.fetchGenderStart(trong file adminAction.js)
+    //Để truy cập được getGenderStart thì dùng this.props.getGenderStart (đây là biến props của react) trong hàm componentDidMount phía trên
+    getGenderStart: () => dispatch(actions.fetchGenderStart()),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserRedux);
