@@ -5,6 +5,7 @@ import {
   createNewUserService,
   getAllUsers,
   deleteUserService,
+  editUserService,
 } from "../../services/userService";
 import { toast } from "react-toastify";
 import { dispatch } from "../../redux";
@@ -144,7 +145,7 @@ export const fetchAllUsersStart = () => {
 
 export const fetchAllUsersSuccess = (data) => ({
   type: actionTypes.FETCH_ALL_USERS_SUCCESS,
-  users: data,  //để lấy dữ liệu này thì bên file adminReducer phải dùng action.users trong case FETCH_ALL_USERS_SUCCESS
+  users: data, //để lấy dữ liệu này thì bên file adminReducer phải dùng action.users trong case FETCH_ALL_USERS_SUCCESS
 });
 
 export const fetchAllUsersFailed = () => ({
@@ -177,4 +178,34 @@ export const deleteUserSuccess = () => ({
 
 export const deleteUserFailed = () => ({
   type: actionTypes.DELETE_USER_FAILED,
+});
+
+export const editAUser = (data) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await editUserService(data);
+      console.log("check data from editAUser: ", data);
+
+      if (res && res.errCode === 0) {
+        toast.success("Update the user succeed!");
+        dispatch(editUserSuccess());
+        dispatch(fetchAllUsersStart());
+      } else {
+        toast.error("Update the user error!");
+        dispatch(editUserFailed());
+      }
+    } catch (e) {
+      toast.error("Update the user error!");
+      dispatch(editUserFailed());
+      console.log("editUserFailed error", e);
+    }
+  };
+};
+
+export const editUserSuccess = () => ({
+  type: actionTypes.EDIT_USER_SUCCESS,
+});
+
+export const editUserFailed = () => ({
+  type: actionTypes.EDIT_USER_FAILED,
 });
