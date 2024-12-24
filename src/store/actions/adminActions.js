@@ -1,6 +1,13 @@
 //Tạo mới file này xong export trong src/store/actions/index.js
 import actionTypes from "./actionTypes";
-import { getAllCodeService, createNewUserService } from "../../services/userService";
+import {
+  getAllCodeService,
+  createNewUserService,
+  getAllUsers,
+  deleteUserService,
+} from "../../services/userService";
+import { toast } from "react-toastify";
+import { dispatch } from "../../redux";
 
 //code chuẩn của redux bao gồm 3 bước start/doing/end
 //Đầu tiên mình phải fire 1 action bắt đầu thực hiện trong FETCH_GENDER_START
@@ -40,20 +47,20 @@ export const fetchGenderFailed = () => ({
 });
 ////////////
 export const fetchPositionStart = () => {
-    return async (dispatch, getState) => {
-      try {
-        let res = await getAllCodeService("POSITION");
-        if (res && res.errCode === 0) {
-          dispatch(fetchPositionSuccess(res.data)); //để fire 1 action của redux ta phải bọc trong hàm dispatch
-        } else {
-          dispatch(fetchPositionFailed());
-        }
-      } catch (e) {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getAllCodeService("POSITION");
+      if (res && res.errCode === 0) {
+        dispatch(fetchPositionSuccess(res.data)); //để fire 1 action của redux ta phải bọc trong hàm dispatch
+      } else {
         dispatch(fetchPositionFailed());
-        console.log("fetchPositionStart error: ", e);
       }
-    };
+    } catch (e) {
+      dispatch(fetchPositionFailed());
+      console.log("fetchPositionStart error: ", e);
+    }
   };
+};
 
 export const fetchPositionSuccess = (positionData) => ({
   type: actionTypes.FETCH_POSITION_SUCCESS,
@@ -65,21 +72,20 @@ export const fetchPositionFailed = () => ({
 });
 //////////////
 export const fetchRoleStart = () => {
-    return async (dispatch, getState) => {
-      try {
-        
-        let res = await getAllCodeService("ROLE");
-        if (res && res.errCode === 0) {
-          dispatch(fetchRoleSuccess(res.data)); //để fire 1 action của redux ta phải bọc trong hàm dispatch
-        } else {
-          dispatch(fetchRoleFailed());
-        }
-      } catch (e) {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getAllCodeService("ROLE");
+      if (res && res.errCode === 0) {
+        dispatch(fetchRoleSuccess(res.data)); //để fire 1 action của redux ta phải bọc trong hàm dispatch
+      } else {
         dispatch(fetchRoleFailed());
-        console.log("fetchRoleStart error: ", e);
       }
-    };
+    } catch (e) {
+      dispatch(fetchRoleFailed());
+      console.log("fetchRoleStart error: ", e);
+    }
   };
+};
 
 export const fetchRoleSuccess = (roleData) => ({
   type: actionTypes.FETCH_ROLE_SUCCESS,
@@ -91,28 +97,84 @@ export const fetchRoleFailed = () => ({
 });
 
 export const createNewUser = (data) => {
-    return async(dispatch, getState) => {
-        try {
-            let res = await createNewUserService(data)
-            if(res&&res.errCode===0){
-                dispatch(saveUserSuccess())
-            }else{
-                dispatch(saveUserFailed())
-            }
-        } catch (e) {
-            dispatch(saveUserFailed())
-            console.log('saveUserFailed error', e);
-        }
+  return async (dispatch, getState) => {
+    try {
+      let res = await createNewUserService(data);
+      if (res && res.errCode === 0) {
+        toast.success("Create a new user succeed!");
+        dispatch(saveUserSuccess());
+        dispatch(fetchAllUsersStart());
+      } else {
+        dispatch(saveUserFailed());
+      }
+    } catch (e) {
+      dispatch(saveUserFailed());
+      console.log("saveUserFailed error", e);
     }
-}
+  };
+};
 
 export const saveUserSuccess = (roleData) => ({
-    type: actionTypes.CREATE_USER_SUCCESS,
-  });
-  
-  export const saveUserFailed = () => ({
-    type: actionTypes.CREATE_USER_FAILED,
-  });
+  type: actionTypes.CREATE_USER_SUCCESS,
+});
 
+export const saveUserFailed = () => ({
+  type: actionTypes.CREATE_USER_FAILED,
+});
 
+export const fetchAllUsersStart = () => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getAllUsers("ALL");
 
+      if (res && res.errCode === 0) {
+        dispatch(fetchAllUsersSuccess(res.users.reverse()));
+      } else {
+        toast.error("Fetch all users error!");
+        dispatch(fetchAllUsersFailed());
+      }
+    } catch (e) {
+      toast.error("Fetch all users error!");
+
+      dispatch(fetchAllUsersFailed());
+      console.log("fetchAllUsersFailed error", e);
+    }
+  };
+};
+
+export const fetchAllUsersSuccess = (data) => ({
+  type: actionTypes.FETCH_ALL_USERS_SUCCESS,
+  users: data,  //để lấy dữ liệu này thì bên file adminReducer phải dùng action.users trong case FETCH_ALL_USERS_SUCCESS
+});
+
+export const fetchAllUsersFailed = () => ({
+  type: actionTypes.FETCH_ALL_USERS_FAILED,
+});
+
+export const deleteAUser = (userId) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await deleteUserService(userId);
+      if (res && res.errCode === 0) {
+        toast.success("Delete the user succeed!");
+        dispatch(deleteUserSuccess());
+        dispatch(fetchAllUsersStart());
+      } else {
+        toast.errCode("Delete the user error!");
+        dispatch(deleteUserFailed());
+      }
+    } catch (e) {
+      toast.error("Delete the user error!");
+      dispatch(deleteUserFailed());
+      console.log("saveUserFailed error", e);
+    }
+  };
+};
+
+export const deleteUserSuccess = () => ({
+  type: actionTypes.DELETE_USER_SUCCESS,
+});
+
+export const deleteUserFailed = () => ({
+  type: actionTypes.DELETE_USER_FAILED,
+});
