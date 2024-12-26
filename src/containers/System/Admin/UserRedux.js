@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { getAllCodeService } from "../../../services/userService";
-import { LANGUAGES, CRUD_ACTIONS } from "../../../utils";
+import { LANGUAGES, CRUD_ACTIONS, CommonUtils } from "../../../utils";
 import "./UserRedux.scss";
 import Lightbox from "react-awesome-lightbox";
 // You need to import the CSS only once
@@ -137,18 +137,20 @@ class UserRedux extends Component {
         role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : "",
         avatar: "",
         action: CRUD_ACTIONS.CREATE,
+        previewImgURL: "",
       });
     }
   }
 
-  handleOnchangeImage = (event) => {
+  handleOnchangeImage = async (event) => {
     let data = event.target.files;
     let file = data[0];
     if (file) {
+      let base64 = await CommonUtils.getBase64(file);
       let objectUrl = URL.createObjectURL(file); //URL.createObjectURL(file) là hàm của html chỉ cần truyền file vào nó sẽ trả ra 1 link url để xem ảnh
       this.setState({
         previewImgURL: objectUrl,
-        avatar: file,
+        avatar: base64,
       });
     }
   };
@@ -178,6 +180,7 @@ class UserRedux extends Component {
         gender: this.state.gender,
         roleId: this.state.role,
         positionId: this.state.position,
+        avatar: this.state.avatar,
       });
     }
     //fire redux edit user
@@ -193,6 +196,7 @@ class UserRedux extends Component {
         gender: this.state.gender,
         roleId: this.state.role,
         positionId: this.state.position,
+        avatar: this.state.avatar,
       });
     }
   };
@@ -226,7 +230,11 @@ class UserRedux extends Component {
   };
 
   handleEditUserFromParent = (user) => {
-    console.log("check handleEditUserFromParent: ", user);
+    let imageBase64 = "";
+    if (user.image) {
+      //user.image này là kiểu blob, truyền thêm tham số có kiểu mã hóa là "base64" sau đó convert sang binary
+      imageBase64 = new Buffer(user.image, "base64").toString("binary");
+    }
     this.setState({
       email: user.email,
       password: "HARDCODE",
@@ -238,6 +246,7 @@ class UserRedux extends Component {
       roleId: user.role,
       positionId: user.position,
       avatar: "",
+      previewImgURL: imageBase64,
       action: CRUD_ACTIONS.EDIT,
       userEditId: user.id,
     });
@@ -372,6 +381,8 @@ class UserRedux extends Component {
                     genders.length > 0 &&
                     genders.map((item, index) => {
                       return (
+                        //item.key trong đó key là thuộc tính đặt trong database trong bảng allcode key này là M, F, O
+                        //lấy key để đưa vào database vì database không nhận value nam, nữ,...
                         <option key={index} value={item.key}>
                           {language === LANGUAGES.VI
                             ? item.valueVi
@@ -434,6 +445,9 @@ class UserRedux extends Component {
                   <FormattedMessage id="manage-user.image" />
                 </label>
                 <div className="preview-img-container">
+                  {/* thẻ input có type = "file" thì sẽ hiện ra 1 button choose file khi click vào sẽ hiện ra popup để chọn file
+                  Nên để có nút tải ảnh thì cần tạo thêm thẻ label rồi dùng htmlFor để liên kết với thẻ input. rồi ta hidden thẻ
+                  input luôn */}
                   <input
                     id="previewImg"
                     type="file"
@@ -513,7 +527,7 @@ const mapDispatchToProps = (dispatch) => {
     getRoleStart: () => dispatch(actions.fetchRoleStart()),
     createNewUser: (data) => dispatch(actions.createNewUser(data)),
     fetchUserRedux: () => dispatch(actions.fetchAllUsersStart()),
-    editAUserRedux: (data) => dispatch(actions.editAUser(data))
+    editAUserRedux: (data) => dispatch(actions.editAUser(data)),
   };
 };
 
