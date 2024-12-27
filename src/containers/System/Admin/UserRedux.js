@@ -102,14 +102,14 @@ class UserRedux extends Component {
       //lúc này hiện tại có [3] và quá khứ cũng có [3] nên sẽ không thỏa điều kiện if và không setState nữa
       this.setState({
         genderArr: arrGenders,
-        gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : "",
+        gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].keyMap : "",
       });
     }
     if (prevProps.roleRedux !== this.props.roleRedux) {
       let arrRoles = this.props.roleRedux;
       this.setState({
         roleArr: arrRoles,
-        role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : "",
+        role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : "",
       });
     }
     if (prevProps.positionRedux !== this.props.positionRedux) {
@@ -117,7 +117,7 @@ class UserRedux extends Component {
       this.setState({
         positionArr: arrPositions,
         position:
-          arrPositions && arrPositions.length > 0 ? arrPositions[0].key : "",
+          arrPositions && arrPositions.length > 0 ? arrPositions[0].keyMap : "",
       });
     }
     if (prevProps.listUsers !== this.props.listUsers) {
@@ -131,10 +131,10 @@ class UserRedux extends Component {
         lastName: "",
         phoneNumber: "",
         address: "",
-        gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : "",
+        gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].keyMap : "",
         position:
-          arrPositions && arrPositions.length > 0 ? arrPositions[0].key : "",
-        role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : "",
+          arrPositions && arrPositions.length > 0 ? arrPositions[0].keyMap : "",
+        role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : "",
         avatar: "",
         action: CRUD_ACTIONS.CREATE,
         previewImgURL: "",
@@ -235,6 +235,7 @@ class UserRedux extends Component {
       //user.image này là kiểu blob, truyền thêm tham số có kiểu mã hóa là "base64" sau đó convert sang binary
       imageBase64 = new Buffer(user.image, "base64").toString("binary");
     }
+
     this.setState({
       email: user.email,
       password: "HARDCODE",
@@ -243,8 +244,8 @@ class UserRedux extends Component {
       address: user.address,
       phoneNumber: user.phoneNumber,
       gender: user.gender,
-      roleId: user.role,
-      positionId: user.position,
+      role: user.roleId,
+      position: user.positionId,
       avatar: "",
       previewImgURL: imageBase64,
       action: CRUD_ACTIONS.EDIT,
@@ -381,9 +382,9 @@ class UserRedux extends Component {
                     genders.length > 0 &&
                     genders.map((item, index) => {
                       return (
-                        //item.key trong đó key là thuộc tính đặt trong database trong bảng allcode key này là M, F, O
-                        //lấy key để đưa vào database vì database không nhận value nam, nữ,...
-                        <option key={index} value={item.key}>
+                        //item.keyMap trong đó keyMap là thuộc tính đặt trong database trong bảng allcode key này là M, F, O
+                        //lấy keyMap để đưa vào database vì database không nhận value nam, nữ,...
+                        <option key={index} value={item.keyMap}>
                           {language === LANGUAGES.VI
                             ? item.valueVi
                             : item.valueEn}
@@ -407,7 +408,7 @@ class UserRedux extends Component {
                     positions.length > 0 &&
                     positions.map((item, index) => {
                       return (
-                        <option key={index} value={item.key}>
+                        <option key={index} value={item.keyMap}>
                           {language === LANGUAGES.VI
                             ? item.valueVi
                             : item.valueEn}
@@ -431,7 +432,7 @@ class UserRedux extends Component {
                     roles.length > 0 &&
                     roles.map((item, index) => {
                       return (
-                        <option key={index} value={item.key}>
+                        <option key={index} value={item.keyMap}>
                           {language === LANGUAGES.VI
                             ? item.valueVi
                             : item.valueEn}

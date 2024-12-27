@@ -25,13 +25,13 @@ class TableManageUser extends Component {
     }
   }
 
-  handleDeleteUser = (user) => {    
+  handleDeleteUser = (user) => {
     this.props.deleteAUserRedux(user.id);
   };
 
   handleEditUser = (user) => {
-    this.props.handleEditUserFromParentKey(user)
-  }
+    this.props.handleEditUserFromParentKey(user);
+  };
 
   /* Life cycle
   Run component:
@@ -64,7 +64,10 @@ class TableManageUser extends Component {
                   <td>{item.lastName}</td>
                   <td>{item.address}</td>
                   <td>
-                    <button className="btn-edit" onClick={()=>this.handleEditUser(item)}>
+                    <button
+                      className="btn-edit"
+                      onClick={() => this.handleEditUser(item)}
+                    >
                       <i className="fas fa-pencil-alt"></i>
                     </button>
                     <button

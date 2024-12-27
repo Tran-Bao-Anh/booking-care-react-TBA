@@ -8,6 +8,7 @@ const initialState = {
   roles: [],
   positions: [],
   users: [],
+  topDoctors: [],
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -59,7 +60,7 @@ const adminReducer = (state = initialState, action) => {
 
     case actionTypes.FETCH_ALL_USERS_SUCCESS:
       console.log("check action FETCH_ALL_USERS_SUCCESS", action);
-      //biến action.users lấy từ hàm fetchAllUsersSuccess trong file adminActions.js 
+      //biến action.users lấy từ hàm fetchAllUsersSuccess trong file adminActions.js
       state.users = action.users;
       return {
         ...state,
@@ -67,6 +68,18 @@ const adminReducer = (state = initialState, action) => {
 
     case actionTypes.FETCH_ALL_USERS_FAILED:
       state.users = [];
+      return {
+        ...state,
+      };
+
+    case actionTypes.FETCH_TOP_DOCTORS_SUCCESS:
+      state.topDoctors = action.dataDoctors;
+      return {
+        ...state,
+      };
+
+    case actionTypes.FETCH_TOP_DOCTORS_FAILED:
+      state.topDoctors = [];
       return {
         ...state,
       };
