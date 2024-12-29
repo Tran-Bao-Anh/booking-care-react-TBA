@@ -28,7 +28,7 @@ class OutStandingDoctor extends Component {
   render() {
     let arrDoctors = this.state.arrDoctors;
     let { language } = this.props;
-    arrDoctors = arrDoctors.concat(arrDoctors).concat(arrDoctors); //do data base có ít phần tử nên dùng concat để nối array
+    //arrDoctors = arrDoctors.concat(arrDoctors).concat(arrDoctors); //do data base có ít phần tử nên dùng concat để nối array,nhập nhiều data thì không cần concat
     console.log("check arrDoctors from OutstandingDoctor.js: ", arrDoctors);
 
     return (
@@ -36,8 +36,8 @@ class OutStandingDoctor extends Component {
         <div className="section-share section-outstanding-doctor">
           <div className="section-container">
             <div className="section-header">
-              <span className="title-section">Bác sĩ nổi bật tuần qua</span>
-              <button className="btn-section">Xem thêm</button>
+              <span className="title-section"><FormattedMessage id='homepage.outstanding-doctor'/></span>
+              <button className="btn-section"><FormattedMessage id="homepage.more-info"/></button>
             </div>
             <div className="section-body">
               <Slider {...this.props.settings}>
@@ -51,7 +51,7 @@ class OutStandingDoctor extends Component {
                       );
                     }
                     let nameVi = `${item.positionData.valueVi}, ${item.lastName} ${item.firstName}`;
-                    let nameEn = `${item.positionData.valueEn}, ${item.lastName} ${item.firstName}`;
+                    let nameEn = `${item.positionData.valueEn}, ${item.firstName} ${item.lastName}`;
                     return (
                       <div className="section-customize" key={index}>
                         <div className="customize-border">
@@ -90,7 +90,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadTopDoctors: () => dispatch(actions.fetchTopDoctor())
+    loadTopDoctors: () => dispatch(actions.fetchTopDoctor()),
   };
 };
 

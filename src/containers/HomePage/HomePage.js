@@ -16,7 +16,7 @@ class HomePage extends Component {
   render() {
     let settings = {
       dots: false,
-      infinite: true,
+      infinite: false,
       speed: 500,
       slidesToShow: 4, //show 4 ảnh cùng lúc trên slider
       slidesToScroll: 1, // dịch chuyển 1 step khi nhấn nút next hoặc prev

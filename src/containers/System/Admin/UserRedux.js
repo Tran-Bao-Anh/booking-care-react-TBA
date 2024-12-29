@@ -146,7 +146,7 @@ class UserRedux extends Component {
     let data = event.target.files;
     let file = data[0];
     if (file) {
-      let base64 = await CommonUtils.getBase64(file);
+      let base64 = await CommonUtils.getBase64(file); //mã hóa file sang dạng base64
       let objectUrl = URL.createObjectURL(file); //URL.createObjectURL(file) là hàm của html chỉ cần truyền file vào nó sẽ trả ra 1 link url để xem ảnh
       this.setState({
         previewImgURL: objectUrl,
@@ -233,7 +233,7 @@ class UserRedux extends Component {
     let imageBase64 = "";
     if (user.image) {
       //user.image này là kiểu blob, truyền thêm tham số có kiểu mã hóa là "base64" sau đó convert sang binary
-      imageBase64 = new Buffer(user.image, "base64").toString("binary");
+      imageBase64 = new Buffer(user.image, "base64").toString("binary");  //giải mã sang binary
     }
 
     this.setState({
