@@ -20,6 +20,7 @@ import System from "../routes/System";
 import { CustomToastCloseButton } from "../components/CustomToast";
 import HomePage from "./HomePage/HomePage";
 import CustomScrollbars from "../components/CustomScrollbars";
+import DetailDoctor from "./Patient/Doctor/DetailDoctor";
 
 class App extends Component {
   handlePersistorState = () => {
@@ -46,12 +47,10 @@ class App extends Component {
         {/* history dùng để lưu lại lịch sử, giữ các thông tin trên trang khi refresh */}
         <Router history={history}>
           <div className="main-container">
-            
-
             <div className="content-container">
               {/* CustomScrollbars sẽ tự phát hiện những component nào bị over flow thì sẽ tự động tạo scroll  */}
               {/* đặt chiều cao là 100vh để nếu chiều cao vượt quá khung nhìn thì xuất hiện scroll */}
-              <CustomScrollbars style={{height: '100vh', width:'100%'}}>
+              <CustomScrollbars style={{ height: "100vh", width: "100%" }}>
                 <Switch>
                   {/* có 3 rout home, login, system được import phía trên cùng */}
                   {/* khai báo hết path trong file constant(giữ control click vào path trong {path.HOME}) */}
@@ -66,6 +65,7 @@ class App extends Component {
                     component={userIsAuthenticated(System)}
                   />
                   <Route path={path.HOMEPAGE} component={HomePage} />
+                  <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
                 </Switch>
               </CustomScrollbars>
             </div>
@@ -83,15 +83,15 @@ class App extends Component {
               closeButton={<CustomToastCloseButton />}
             /> */}
             <ToastContainer
-             position="bottom-right"
-             autoClose = {5000}
-             hideProgressBar={false}
-             newestOnTop={false}
-             closeOnClick
-             rtl={false}
-             pauseOnFocusLoss
-             draggable
-             pauseOnHover
+              position="bottom-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
             />
           </div>
         </Router>
