@@ -37,7 +37,7 @@ class Login extends Component {
       errMessage: "",
     });
     try {
-      let data = await handleLoginApi(this.state.username, this.state.password);  //data từ server xử lý xong gửi qua client
+      let data = await handleLoginApi(this.state.username, this.state.password); //data từ server xử lý xong gửi qua client
       //nếu có lỗi thì show lỗi
       if (data && data.errCode !== 0) {
         this.setState({
@@ -49,13 +49,12 @@ class Login extends Component {
         this.props.userLoginSuccess(data.user);
         console.log("Login succeeds");
       }
-
     } catch (error) {
-      if(error.response){
-        if(error.response.data){
+      if (error.response) {
+        if (error.response.data) {
           this.setState({
-            errMessage:error.response.data.message
-          })
+            errMessage: error.response.data.message,
+          });
         }
       }
     }
@@ -72,6 +71,12 @@ class Login extends Component {
     this.setState({
       isShowPassword: !this.state.isShowPassword,
     });
+  };
+
+  handleKeyDown = (event) => {
+    if (event.key === "Enter" || event.keyCode === 13) {
+      this.handleLogin();
+    }
   };
 
   render() {
@@ -100,6 +105,7 @@ class Login extends Component {
                   className="form-control"
                   placeholder="Enter your password"
                   onChange={(event) => this.handleOnChangePassword(event)}
+                  onKeyDown={(event) => this.handleKeyDown(event)}
                 />
                 <span onClick={() => this.handleShowHidePassword()}>
                   <i
@@ -112,7 +118,7 @@ class Login extends Component {
                 </span>
               </div>
             </div>
-            <div className="col-12" style={{color:'red'}}>
+            <div className="col-12" style={{ color: "red" }}>
               {this.state.errMessage}
             </div>
             <div className="col-12">
