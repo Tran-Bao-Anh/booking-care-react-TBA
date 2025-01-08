@@ -4,7 +4,7 @@ export const adminMenu = [
     name: "menu.admin.manage-user", //menu cha
     menus: [
       {
-        name: "menu.admin.crud",  //menu con
+        name: "menu.admin.crud", //menu con
         link: "/system/user-manage",
       },
       {
@@ -16,15 +16,14 @@ export const adminMenu = [
         link: "/system/manage-doctor",
       },
       {
-        name: "menu.admin.manage-admin",
-        link: "/system/user-admin",
+        name: "menu.doctor.manage-schedule",
+        link: "/doctor/manage-schedule",
       },
-      // { name: 'menu.system.system-parameter.header', link: '/system/system-parameter' },
     ],
   },
   {
     //quản lý phòng khám
-    name: "menu.admin.clinic",  //menu cha
+    name: "menu.admin.clinic", //menu cha
     menus: [
       {
         name: "menu.admin.manage-clinic", //menu con
@@ -51,6 +50,19 @@ export const adminMenu = [
       {
         name: "menu.admin.manage-handbook",
         link: "/system/manage-handbook",
+      },
+    ],
+  },
+];
+
+export const doctorMenu = [
+  {
+    name: "menu.admin.manage-user",
+    menus: [
+      {
+        //Quản lý kế hoạch khám bệnh của bác sĩ
+        name: "menu.doctor.manage-schedule",
+        link: "/doctor/manage-schedule",
       },
     ],
   },
