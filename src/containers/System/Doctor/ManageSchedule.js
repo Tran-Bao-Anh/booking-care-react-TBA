@@ -99,7 +99,6 @@ class ManageSchedule extends Component {
       return;
     }
     //dateFormat.SEND_TO_SERVER lấy trong file constant nghĩa là dateFormat.SEND_TO_SERVER = DD/MM/YYYY
-    //moment dùng định dạng lại ngày DD/MM/YYYY
     let formattedDate = new Date(currentDate).getTime();
     if (rangeTime && rangeTime.length > 0) {
       let selectedTime = rangeTime.filter((item) => item.isSelected === true);
