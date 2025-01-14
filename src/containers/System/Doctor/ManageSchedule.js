@@ -121,15 +121,19 @@ class ManageSchedule extends Component {
       doctorId: selectedDoctor.value,
       formattedDate: formattedDate,
     });
-    console.log('check res:saveBulkScheduleDoctor from ManageSchedule.js: ', res);
-    
 
-    console.log("check result from ManageSchedule: ", result);
+    if (res && res.errCode === 0) {
+      toast.success("Save Info Succeed!");
+    } else {
+      toast.error("error saveBulkScheduleDoctor ");
+      console.log("error saveBulkScheduleDoctor >>> res: ", res);
+    }
   };
 
   render() {
     let { rangeTime } = this.state;
     let { language } = this.props;
+    let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
     return (
       <>
         <div className="manage-schedule-container">
@@ -157,7 +161,7 @@ class ManageSchedule extends Component {
                   onChange={this.handleOnchangeDatePicker}
                   className="form-control"
                   value={this.state.currentDate}
-                  minDate={new Date()} //minDate là ngày tối thiểu. chỉ cho hẹn lịch bắt đầu từ ngày hôm nay, không cho chọn quá khứ. new Date là ngày hôm nay
+                  minDate={yesterday} //minDate là ngày tối thiểu. chỉ cho hẹn lịch bắt đầu từ ngày hôm nay, không cho chọn quá khứ. new Date là ngày hôm nay
                 />
               </div>
               <div className="col-12 pick-hour-container">
