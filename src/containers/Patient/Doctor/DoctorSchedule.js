@@ -6,6 +6,7 @@ import { getScheduleDoctorByDate } from "../../../services/userService";
 import localization from "moment/locale/vi"; //để moment hiểu tiếng việt đầu tiên
 import { LANGUAGES } from "../../../utils";
 import { FormattedMessage } from "react-intl";
+import BookingModal from "./Modal/BookingModal";
 
 class DoctorSchedule extends Component {
   //hàm tạo constructor
@@ -14,6 +15,8 @@ class DoctorSchedule extends Component {
     this.state = {
       allDays: [],
       allAvailableTime: [],
+      isOpenModalBooking: false,
+      dataScheduleTimeModal: {},
     };
   }
 
@@ -104,6 +107,19 @@ class DoctorSchedule extends Component {
     }
   };
 
+  HandleClickScheduleTime = (time) => {
+    this.setState({
+      isOpenModalBooking: true,
+      dataScheduleTimeModal: time,
+    });
+  };
+
+  closeBookingClose = () => {
+    this.setState({
+      isOpenModalBooking: false,
+    });
+  };
+
   /* Life cycle
   Run component:
   1.Run construct -> init state
@@ -112,7 +128,12 @@ class DoctorSchedule extends Component {
   3. Render muốn re-render thì dùng hàm setState
   Mỗi lần setState() thì re-render  */
   render() {
-    let { allDays, allAvailableTime } = this.state;
+    let {
+      allDays,
+      allAvailableTime,
+      isOpenModalBooking,
+      dataScheduleTimeModal,
+    } = this.state;
     let { language } = this.props;
 
     return (
@@ -154,6 +175,7 @@ class DoctorSchedule extends Component {
                           className={
                             language === LANGUAGES.VI ? "btn-vie" : "btn-en"
                           }
+                          onClick={() => this.HandleClickScheduleTime(item)}
                         >
                           {timeDisplay}
                         </button>
@@ -176,6 +198,11 @@ class DoctorSchedule extends Component {
             </div>
           </div>
         </div>
+        <BookingModal
+          isOpenModal={isOpenModalBooking}
+          closeBookingClose={this.closeBookingClose}
+          dataTime={dataScheduleTimeModal}
+        />
       </>
     );
   }
