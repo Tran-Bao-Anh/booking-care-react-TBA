@@ -77,6 +77,20 @@
       "detail": "Xem chi tiết",
       "payment": "Người bệnh có thể thanh toán chi phí bằng hình thức: ",
       "hide-price": "Ẩn bảng giá"
+    },
+    "booking-modal": {
+      "title": "Thông tin đặt lịch khám bệnh",
+      "fullName": "Họ và tên",
+      "phoneNumber": "Số điện thoại",
+      "email": "Địa chỉ email",
+      "address": "Địa chỉ liên lạc",
+      "reason": "Lý do khám bệnh",
+      "birthday": "Ngày sinh",
+      "gender": "Giới tính",
+      "btnConfirm": "Xác nhận",
+      "btnCancel": "Hủy",
+      "priceBooking": "Miễn phí đặt lịch",
+      "price": "Giá khám: "
     }
   },
   "admin": {
