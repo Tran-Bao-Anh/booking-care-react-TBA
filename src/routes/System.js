@@ -5,6 +5,7 @@ import UserManage from "../containers/System/UserManage";
 import UserRedux from "../containers/System/Admin/UserRedux";
 import Header from "../containers/Header/Header";
 import ManageDoctor from "../containers/System/Admin/ManageDoctor";
+import ManageSpecialty from "../containers/System/Specialty/ManageSpecialty";
 class System extends Component {
   render() {
     const { systemMenuPath, isLoggedIn } = this.props; //isLoggedIn check login
@@ -17,6 +18,7 @@ class System extends Component {
               <Route path="/system/user-manage" component={UserManage} />
               <Route path="/system/user-redux" component={UserRedux} />
               <Route path="/system/manage-doctor" component={ManageDoctor} />
+              <Route path="/system/manage-specialty" component={ManageSpecialty} />
               {/* Vào file menuApp.js tìm đường dẫn tới UserManage và UserRedux */}
               <Route
                 component={() => {
