@@ -40,48 +40,48 @@ class HeaderHome extends Component {
               <div className="child-content">
                 <div>
                   <b>
-                    <FormattedMessage id="homeheader.speciality" />
+                    <FormattedMessage id="home-header.specialty" />
                   </b>
                 </div>
                 <div className="subs-title">
-                  <FormattedMessage id="homeheader.searchdoctor" />
+                  <FormattedMessage id="home-header.search-doctor" />
                 </div>
               </div>
               <div className="child-content">
                 <div>
                   <b>
-                    <FormattedMessage id="homeheader.health-facility" />
+                    <FormattedMessage id="home-header.health-facility" />
                   </b>
                 </div>
                 <div className="subs-title">
-                  <FormattedMessage id="homeheader.select-room" />
+                  <FormattedMessage id="home-header.select-room" />
                 </div>
               </div>
               <div className="child-content">
                 <div>
                   <b>
-                    <FormattedMessage id="homeheader.doctor" />
+                    <FormattedMessage id="home-header.doctor" />
                   </b>
                 </div>
                 <div className="subs-title">
-                  <FormattedMessage id="homeheader.select-doctor" />
+                  <FormattedMessage id="home-header.select-doctor" />
                 </div>
               </div>
               <div className="child-content">
                 <div>
                   <b>
-                    <FormattedMessage id="homeheader.fee" />
+                    <FormattedMessage id="home-header.fee" />
                   </b>
                 </div>
                 <div className="subs-title">
-                  <FormattedMessage id="homeheader.check-health" />
+                  <FormattedMessage id="home-header.check-health" />
                 </div>
               </div>
             </div>
             <div className="right-content">
               <div className="support">
                 <i className="fas fa-question-circle"></i>
-                <FormattedMessage id="homeheader.support" />
+                <FormattedMessage id="home-header.support" />
               </div>
               <div
                 className={

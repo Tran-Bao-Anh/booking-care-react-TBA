@@ -1,7 +1,7 @@
 {
-  "homeheader": {
-    "speciality": "Chuyên khoa",
-    "searchdoctor": "Tìm bác sĩ theo chuyên khoa",
+  "home-header": {
+    "specialty": "Chuyên khoa",
+    "search-doctor": "Tìm bác sĩ theo chuyên khoa",
     "health-facility": "Cơ sở y tế",
     "select-room": "Chọn bệnh viện, phòng khám",
     "doctor": "Bác sĩ",
@@ -56,7 +56,8 @@
   },
   "homepage": {
     "outstanding-doctor": "Bác sĩ nổi bật tuần qua",
-    "more-info": "Xem thêm"
+    "more-info": "Xem thêm",
+    "specialty-popular": "Chuyên khoa phổ biến"
   },
   "manage-schedule": {
     "title": "Quản lý kế hoạch khám bệnh của bác sĩ",
