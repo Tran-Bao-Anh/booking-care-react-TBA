@@ -9,6 +9,7 @@ import {
   getTopDoctorHomeService,
   getAllDoctors,
   saveDetailDoctorService,
+  getAllSpecialty,
 } from "../../services/userService";
 import { toast } from "react-toastify";
 import { dispatch } from "../../redux";
@@ -313,6 +314,7 @@ export const getRequiredDoctorInfo = () => {
       let resPrice = await getAllCodeService("PRICE");
       let resPayment = await getAllCodeService("PAYMENT");
       let resProvince = await getAllCodeService("PROVINCE");
+      let resSpecialty = await getAllSpecialty();
 
       if (
         resPrice &&
@@ -320,12 +322,15 @@ export const getRequiredDoctorInfo = () => {
         resPayment &&
         resPayment.errCode === 0 &&
         resProvince &&
-        resProvince.errCode === 0
+        resProvince.errCode === 0 &&
+        resSpecialty &&
+        resSpecialty.errCode === 0
       ) {
         let data = {
           resPrice: resPrice.data,
           resPayment: resPayment.data,
           resProvince: resProvince.data,
+          resSpecialty: resSpecialty.data,
         };
 
         dispatch(fetchRequiredDoctorInfoSuccess(data));
