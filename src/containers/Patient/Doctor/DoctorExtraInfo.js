@@ -19,6 +19,14 @@ class DoctorExtraInfo extends Component {
 
   async componentDidMount() {
     // Chạy ngay sau khi component được render
+    if (this.props.doctorIdFromParent) {
+      let res = await getExtraInfoDoctorById(this.props.doctorIdFromParent);
+      if (res && res.errCode === 0) {
+        this.setState({
+          extraInfo: res.data,
+        });
+      }
+    }
   }
   async componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.language !== prevProps.language) {
@@ -155,7 +163,7 @@ class DoctorExtraInfo extends Component {
                 </div>
                 <div className="hide-price">
                   <span onClick={() => this.showHideDetailInfo(false)}>
-                    <FormattedMessage id='patient.extra-info-doctor.hide-price'/>
+                    <FormattedMessage id="patient.extra-info-doctor.hide-price" />
                   </span>
                 </div>
               </>

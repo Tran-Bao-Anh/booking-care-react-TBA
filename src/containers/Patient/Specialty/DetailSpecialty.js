@@ -3,11 +3,16 @@ import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import "./DetailSpecialty.scss";
 import HeaderHome from "../../HomePage/HeaderHome";
+import DoctorSchedule from "../Doctor/DoctorSchedule";
+import DoctorExtraInfo from "../Doctor/DoctorExtraInfo";
+import ProfileDoctor from "../Doctor/ProfileDoctor";
 
 class DetailSpecialty extends Component {
   constructor(Props) {
     super(Props);
-    this.state = {};
+    this.state = {
+      arrDoctorId: [1, 2, 14],
+    };
   }
 
   async componentDidMount() {}
@@ -17,11 +22,38 @@ class DetailSpecialty extends Component {
   }
 
   render() {
+    let { arrDoctorId } = this.state;
     return (
-        <>
-            <HeaderHome/>
-            <div>Hello word from detail specialty</div>
-        </>
+      <div className="detail-specialty-container">
+        <HeaderHome />
+        <div className="detail-specialty-body">
+          <div className="description-specialty"></div>
+          {arrDoctorId &&
+            arrDoctorId.length > 0 &&
+            arrDoctorId.map((item, index) => {
+              return (
+                <div className="each-doctor" key={index}>
+                  <div className="dt-content-left">
+                    <div className="profile-doctor">
+                      <ProfileDoctor
+                        doctorId={item}
+                        isShowDescriptionDoctor={true}
+                      />
+                    </div>
+                  </div>
+                  <div className="dt-content-right">
+                    <div className="doctor-schedule">
+                      <DoctorSchedule doctorIdFromParent={item} />
+                    </div>
+                    <div className="doctor-extra-info">
+                      <DoctorExtraInfo doctorIdFromParent={item} />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+      </div>
     );
   }
 }
