@@ -248,7 +248,7 @@ class ManageDoctor extends Component {
         selectedPayment: selectedPayment,
         selectedPrice: selectedPrice,
         selectedProvince: selectedProvince,
-        selectedSpecialty: selectedSpecialty
+        selectedSpecialty: selectedSpecialty,
       });
     } else {
       this.setState({
@@ -259,6 +259,10 @@ class ManageDoctor extends Component {
         addressClinic: "",
         nameClinic: "",
         note: "",
+        selectedPayment: "",
+        selectedPrice: "",
+        selectedProvince: "",
+        selectedSpecialty: "",
       });
     }
   };

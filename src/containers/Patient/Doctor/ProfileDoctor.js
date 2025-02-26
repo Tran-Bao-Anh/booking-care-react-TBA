@@ -70,7 +70,7 @@ class ProfileDoctor extends Component {
 
   render() {
     let { dataProfile } = this.state;
-    let { language, isShowDescriptionDoctor, dataTime } = this.props;
+    let { language, isShowDescriptionDoctor, dataTime } = this.props; 
     let nameVi = "",
       nameEn = "";
     if (dataProfile && dataProfile.positionData) {
