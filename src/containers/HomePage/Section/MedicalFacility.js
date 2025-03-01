@@ -3,9 +3,35 @@ import { connect } from "react-redux";
 import "./MedicalFacility.scss";
 import { FormattedMessage } from "react-intl";
 import Slider from "react-slick";
+import { getAllClinic } from "../../../services/userService";
+import { withRouter } from "react-router";
 
 class MedicalFacility extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      dataClinics: [],
+    };
+  }
+
+  async componentDidMount() {
+    let res = await getAllClinic();
+    if (res && res.errCode === 0) {
+      this.setState({
+        dataClinics: res.data ? res.data : [],
+      });
+    }
+  }
+
+  handleViewDetailClinic = (clinic) => {
+    if (this.props.history) {
+      this.props.history.push(`/detail-clinic/${clinic.id}`);
+    }
+  };
+
   render() {
+    let { dataClinics } = this.state;
     return (
       <>
         <div className="section-share section-medical-facility">
@@ -16,30 +42,23 @@ class MedicalFacility extends Component {
             </div>
             <div className="section-body">
               <Slider {...this.props.settings}>
-                <div className="section-customize">
-                  <div className="bg-image section-medical-facility" />
-                  <div>Bệnh viện đại học y dược 1</div>
-                </div>
-                <div className="section-customize">
-                  <div className="bg-image section-medical-facility" />
-                  <div>Bệnh viện đại học y dược 2</div>
-                </div>
-                <div className="section-customize">
-                  <div className="bg-image section-medical-facility" />
-                  <div>Bệnh viện đại học y dược 3</div>
-                </div>
-                <div className="section-customize">
-                  <div className="bg-image section-medical-facility" />
-                  <div>Bệnh viện đại học y dược 4</div>
-                </div>
-                <div className="section-customize">
-                  <div className="bg-image section-medical-facility" />
-                  <div>Bệnh viện đại học y dược 5</div>
-                </div>
-                <div className="section-customize">
-                  <div className="bg-image section-medical-facility" />
-                  <div>Bệnh viện đại học y dược 6</div>
-                </div>
+                {dataClinics &&
+                  dataClinics.length > 0 &&
+                  dataClinics.map((item, index) => {
+                    return (
+                      <div
+                        className="section-customize clinic-child"
+                        key={index}
+                        onClick={() => this.handleViewDetailClinic(item)}
+                      >
+                        <div
+                          className="bg-image section-medical-facility"
+                          style={{ backgroundImage: `url(${item.image})` }}
+                        />
+                        <div className="clinic-name">{item.name}</div>
+                      </div>
+                    );
+                  })}
               </Slider>
             </div>
           </div>
@@ -59,4 +78,6 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MedicalFacility);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(MedicalFacility)
+);
